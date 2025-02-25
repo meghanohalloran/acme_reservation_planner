@@ -13,7 +13,7 @@ await client.query(`
   console.log('drop tables');
 }
 
-const createTables = async () => {
+const createTables = async() => {
 
   try {
     await client.query(`
@@ -25,18 +25,18 @@ const createTables = async () => {
       CREATE TABLE restaurants (
         id SERIAL PRIMARY KEY,
         name VARCHAR(30) NOT NULL
+    );
 
-    CREATE TABLE reservations  (
+    CREATE TABLE reservations (
       id SERIAL PRIMARY KEY,
-      date DATE NOT NULL
-       party_count INTEGER NOT NULL
-      restaurant_id INTEGER REFERENCES
+      date DATE NOT NULL,
+       party_count INTEGER NOT NULL,
+      restaurant_id INTEGER REFERENCES restaurants(id),
+      customers_id INTEGER REFERENCES customers(id)
   );
-
-      );
     `);
     console.log('create tables');
-  } catch (err) {
+  } catch(err) {
     console.log(err);
   }
   
@@ -46,7 +46,10 @@ const syncAndSeed = async() => {
   await client.connect();
   console.log('connected to the db');
 
+  await dropTables();
   await createTables();
+
+  
 
 
   await client.end();
