@@ -1,4 +1,5 @@
 const client = require('./client.cjs');
+const { createCustomer } = require('.customers.cjs')
 
 const dropTables = async() => {
 try {
@@ -48,6 +49,11 @@ const syncAndSeed = async() => {
 
   await dropTables();
   await createTables();
+  await createCustomer('Bob');
+  await createCustomer('Ann');
+  await createCustomer('Tom');
+  await createCustomer('Mary');
+  console.log('created customers');
 
   
 
