@@ -1,5 +1,7 @@
 const client = require('./client.cjs');
-const { createCustomer } = require('.customers.cjs')
+const { createCustomer } = require('/.customers.cjs');
+const { createRestuarant } = require('/.restaurant.cjs');
+const { createReservation } = require('/.reservation.cjs');
 
 const dropTables = async() => {
 try {
@@ -35,7 +37,7 @@ const createTables = async() => {
       date DATE NOT NULL,
        party_count INTEGER NOT NULL,
       restaurant_id INTEGER REFERENCES restaurants(id), NOT NULL,
-      customers_id INTEGER REFERENCES customers(id), NOT NULL
+      customer_id INTEGER REFERENCES customers(id), NOT NULL
   );
     `);
     console.log('create tables');
@@ -57,8 +59,18 @@ const syncAndSeed = async() => {
   await createCustomer('mary');
   console.log('created customers');
 
-  
 
+  console.log('CREATING RESTAURANTS');
+  await createRestaurant ('Olive Garden');
+  await createRestaurant('Red Lobster');
+  await createRestaurant('Outback');
+  await createRestaurant('City Walk');
+  console.log('RESTAURANTS CREATED');
+  
+  console.log('CREATING RESERVATIONS');
+  // console.log(new Date(2025, 1, 22).toISOString().slice(0,19).replace('T', ''));
+  await createReservation('2025-02-22',4,1, 1 );
+  console,log('RESERVATIONS CREATED')
 
   await client.end();
   console.log('disconnect db');
