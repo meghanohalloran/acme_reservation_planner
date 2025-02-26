@@ -61,15 +61,20 @@ const syncAndSeed = async() => {
 
 
   console.log('CREATING RESTAURANTS');
-  await createRestaurant ('Olive Garden');
-  await createRestaurant('Red Lobster');
-  await createRestaurant('Outback');
-  await createRestaurant('City Walk');
+  const oliveGarden = await oliveGarden ('Olive Garden');
+  const redLobster = await createRestaurant('Red Lobster');
+  const outback = await createRestaurant('Outback');
+  const cityWalk = await createRestaurant('City Walk');
+  const texasRoadhouse = await createRestuarant('TexasRoadhouse');
   console.log('RESTAURANTS CREATED');
   
   console.log('CREATING RESERVATIONS');
   // console.log(new Date(2025, 1, 22).toISOString().slice(0,19).replace('T', ''));
-  await createReservation('2025-02-22',4,1, 1 );
+  await createReservation('2025-02-22',4, 1, 1 );
+  await createReservation('2025-03-22',2, 2, 1 );
+  await createReservation('2025-02-22',3, 1, 2 );
+  await createReservation('2025-02-25',5, 3, 3 );
+  await createReservation('2025-03-03',3, 4, 3 );
   console,log('RESERVATIONS CREATED')
 
   await client.end();

@@ -1,10 +1,15 @@
 const client = require('./client.cjs');
 const createRestaurant = async(restaurantName) => {
   try{
-    await client.query(`
+    const { rows } = await client.query(`
       INSERT INTO restaurants (name)
       VALUES ('${restaurantName})';
+      RETURNING *;
     `);
+
+    const restaurant = rows[0];
+    return restaurant;
+    console.log(rows);
     } catch(err) {
       console.log(err);
 
