@@ -5,8 +5,10 @@ const dropTables = async() => {
 try {
 
 await client.query(`
+  DROP TABLE IF EXISTS reservations;
   DROP TABLE IF EXISTS customers; 
   DROP TABLE IF EXISTS restaurants; 
+  
   `);
 } catch(err) {
 
@@ -32,8 +34,8 @@ const createTables = async() => {
       id SERIAL PRIMARY KEY,
       date DATE NOT NULL,
        party_count INTEGER NOT NULL,
-      restaurant_id INTEGER REFERENCES restaurants(id),
-      customers_id INTEGER REFERENCES customers(id)
+      restaurant_id INTEGER REFERENCES restaurants(id), NOT NULL,
+      customers_id INTEGER REFERENCES customers(id), NOT NULL
   );
     `);
     console.log('create tables');
@@ -49,10 +51,10 @@ const syncAndSeed = async() => {
 
   await dropTables();
   await createTables();
-  await createCustomer('Bob');
-  await createCustomer('Ann');
-  await createCustomer('Tom');
-  await createCustomer('Mary');
+  await createCustomer('bob');
+  await createCustomer('ann');
+  await createCustomer('tom');
+  await createCustomer('mary');
   console.log('created customers');
 
   
