@@ -1,6 +1,6 @@
 const client = require('./client.cjs');
-const { createCustomer } = require('/.customers.cjs');
-const { createRestuarant } = require('/.restaurant.cjs');
+const { createCustomer, fetchAllCustomers } = require('/.customers.cjs');
+const { createRestuarant, fetchRestaurants } = require('/.restaurant.cjs');
 const { createReservation } = require('/.reservation.cjs');
 
 const dropTables = async() => {
@@ -53,10 +53,10 @@ const syncAndSeed = async() => {
 
   await dropTables();
   await createTables();
-  await createCustomer('bob');
-  await createCustomer('ann');
-  await createCustomer('tom');
-  await createCustomer('mary');
+  const bob = await createCustomer('bob');
+  const ann = await createCustomer('ann');
+  const tom = await createCustomer('tom');
+  const mary = await createCustomer('mary');
   console.log('created customers');
 
 
@@ -67,15 +67,30 @@ const syncAndSeed = async() => {
   const cityWalk = await createRestaurant('City Walk');
   const texasRoadhouse = await createRestuarant('TexasRoadhouse');
   console.log('RESTAURANTS CREATED');
+
+  await getAllCustomers
   
   console.log('CREATING RESERVATIONS');
   // console.log(new Date(2025, 1, 22).toISOString().slice(0,19).replace('T', ''));
-  await createReservation('2025-02-22',4, 1, 1 );
-  await createReservation('2025-03-22',2, 2, 1 );
-  await createReservation('2025-02-22',3, 1, 2 );
-  await createReservation('2025-02-25',5, 3, 3 );
-  await createReservation('2025-03-03',3, 4, 3 );
+  await createReservation('2025-02-22',4, oliveGarden.id, bob.id );
+  await createReservation('2025-03-22',2, redLobster,id, bob.id);
+  await createReservation('2025-02-22',3, oliveGarden.id, ann.id);
+  await createReservation('2025-02-25',5, outback.id, tom.id);
+  await createReservation('2025-03-03',3, cityWalk.id, tom.id);
+  await createReservation('2025-03-05',5, cityWalk,id, tom.id);
+  await createReservation('2025-04-09',10, cityWalk,id, tom.id);
+  await createReservation('2025-04-01',8, cityWalk,id, tom.id);
+  
+
   console,log('RESERVATIONS CREATED')
+
+  console.log(gettingAllCustomers);
+  const getAllCustomers = await fetchAllCustomers();  
+
+  console.log('FETCHING RESTAURANTS');
+  const allRestaurants = await fetchRestaurants();
+  console.log(allRestaurants);
+
 
   await client.end();
   console.log('disconnect db');
