@@ -9,6 +9,7 @@ const createRestaurant = async(restaurantName) => {
 
     const restaurant = rows[0];
     return restaurant;
+
     console.log(rows);
     } catch(err) {
       console.log(err);
@@ -16,6 +17,21 @@ const createRestaurant = async(restaurantName) => {
     }
 }
 
+const fetchRestaurants = async() => {
+  try {
+    const{ rows: retrievedRestaurants } = await client.query(`
+      SELECT * FROM restaurants;
+      `);
+
+        return retrievedRestaurants;
+  } catch(err) {
+   console.log(err);
+  }
+}
+
+
+// console.log(err);
 module.exports = {
   createRestaurant
+  fetchRestaurant
 }
